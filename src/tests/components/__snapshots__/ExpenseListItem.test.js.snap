@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render ExpenseListItem with expenses 1`] = `
+<div>
+  <a
+    aria-current={null}
+    href="/expenses/1"
+    onClick={[Function]}
+  >
+    <h3>
+      first expense
+    </h3>
+  </a>
+  <p>
+    400
+  </p>
+  <time
+    dateTime={"2015-03-24T23:00:00.000Z"}
+  >
+    Wed Mar 25 2015 00:00:00 GMT+0100
+  </time>
+</div>
+`;

@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should create Header component to match snapshot 1`] = `
+<header>
+  <h1>
+    Budget app
+  </h1>
+  <ul>
+    <li>
+      <a
+        aria-current="page"
+        className="active"
+        href="/"
+        onClick={[Function]}
+        style={Object {}}
+      >
+        Dashboard
+      </a>
+    </li>
+    <li>
+      <a
+        aria-current={null}
+        href="/expenses"
+        onClick={[Function]}
+      >
+        Create
+      </a>
+    </li>
+    <li>
+      <a
+        aria-current={null}
+        href="/help"
+        onClick={[Function]}
+      >
+        Help
+      </a>
+    </li>
+  </ul>
+</header>
+`;

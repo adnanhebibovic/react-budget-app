@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render ExpenseAdd component correctly 1`] = `
+<div>
+  <h1>
+    Create Expense
+  </h1>
+  <div>
+    
+    <form
+      onSubmit={[Function]}
+    >
+      <input
+        autoFocus={true}
+        onChange={[Function]}
+        placeholder="Title"
+        type="text"
+        value=""
+      />
+      <input
+        onChange={[Function]}
+        placeholder="Amount"
+        type="number"
+        value=""
+      />
+      <input
+        type="submit"
+        value="Save"
+      />
+    </form>
+  </div>
+</div>
+`;

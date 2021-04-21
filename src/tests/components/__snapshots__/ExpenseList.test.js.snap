@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render ExpenseList with expenses 1`] = `
+<div>
+  <h2>
+    Expense list
+  </h2>
+  <div>
+    <a
+      aria-current={null}
+      href="/expenses/1"
+      onClick={[Function]}
+    >
+      <h3>
+        first expense
+      </h3>
+    </a>
+    <p>
+      400
+    </p>
+    <time
+      dateTime={"2015-03-24T23:00:00.000Z"}
+    >
+      Wed Mar 25 2015 00:00:00 GMT+0100
+    </time>
+  </div>
+  <div>
+    <a
+      aria-current={null}
+      href="/expenses/2"
+      onClick={[Function]}
+    >
+      <h3>
+        second expense
+      </h3>
+    </a>
+    <p>
+      500
+    </p>
+    <time
+      dateTime={"2015-03-27T23:00:00.000Z"}
+    >
+      Sat Mar 28 2015 00:00:00 GMT+0100
+    </time>
+  </div>
+  <div>
+    <a
+      aria-current={null}
+      href="/expenses/3"
+      onClick={[Function]}
+    >
+      <h3>
+        third expense
+      </h3>
+    </a>
+    <p>
+      200
+    </p>
+    <time
+      dateTime={"2015-03-26T23:00:00.000Z"}
+    >
+      Fri Mar 27 2015 00:00:00 GMT+0100
+    </time>
+  </div>
+  <div>
+    <a
+      aria-current={null}
+      href="/expenses/4"
+      onClick={[Function]}
+    >
+      <h3>
+        fourth expense
+      </h3>
+    </a>
+    <p>
+      100
+    </p>
+    <time
+      dateTime={"2015-03-25T23:00:00.000Z"}
+    >
+      Thu Mar 26 2015 00:00:00 GMT+0100
+    </time>
+  </div>
+</div>
+`;
+
+exports[`Should render ExpenseList with no expenses 1`] = `
+<div>
+  <h2>
+    Expense list
+  </h2>
+  <p>
+    Please create an expense to get started!
+  </p>
+</div>
+`;

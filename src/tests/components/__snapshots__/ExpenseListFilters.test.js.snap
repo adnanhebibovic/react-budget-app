@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render ExpenseListFilters component correctly 1`] = `
+<div>
+  <input
+    onChange={[Function]}
+    type="text"
+  />
+  <select
+    defaultValue="createdAt"
+    onChange={[Function]}
+  >
+    <option
+      value="createdAt"
+    >
+      Date
+    </option>
+    <option
+      value="amount"
+    >
+      Amount
+    </option>
+  </select>
+  <input
+    name="startDate"
+    onChange={[Function]}
+    type="date"
+  />
+  <input
+    name="endDate"
+    onChange={[Function]}
+    type="date"
+  />
+</div>
+`;

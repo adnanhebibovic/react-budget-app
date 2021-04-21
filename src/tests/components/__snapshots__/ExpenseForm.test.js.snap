@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render Expense form component 1`] = `
+<div>
+  <div>
+    
+    <form>
+      <input
+        placeholder="Title"
+        type="text"
+        value=""
+      />
+      <input
+        placeholder="Amount"
+        type="number"
+        value=""
+      />
+      <input
+        type="submit"
+        value="Save"
+      />
+    </form>
+  </div>
+</div>
+`;
+
+exports[`Should render Expense form component with expense data 1`] = `
+<div>
+  <div>
+    
+    <form>
+      <input
+        placeholder="Title"
+        type="text"
+        value="first expense"
+      />
+      <input
+        placeholder="Amount"
+        type="number"
+        value="400"
+      />
+      <input
+        type="submit"
+        value="Save"
+      />
+    </form>
+  </div>
+</div>
+`;
