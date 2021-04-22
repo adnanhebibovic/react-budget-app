@@ -17,7 +17,7 @@ export default function App() {
                 <Header></Header>
                 <Switch>
                     <Route exact path="/" component={ExpenseDashboard}></Route>
-                    <Route path="/expenses" component={ExpensePage}></Route>
+                    <Route path="/create" component={ExpensePage}></Route>
                     <Route path="/help" component={HelpPage}></Route>
                     <Route component={NotFound}></Route>
                 </Switch>
