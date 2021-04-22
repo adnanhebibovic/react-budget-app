@@ -19,14 +19,14 @@ function ExpenseListFilters(props) {
     }
 
     function onStartDateChange(e) {
-        const startDate = new Date(e.target.value)
+        const startDate = new Date(e.target.value).getTime()
 
         setStartDate(startDate)
         props.setDateFilters(startDate, endDate)
     }
 
     function onEndDateChange(e) {
-        const endDate = new Date(e.target.value)
+        const endDate = new Date(e.target.value).getTime()
 
         setEndDate(endDate)
         props.setDateFilters(startDate, endDate)

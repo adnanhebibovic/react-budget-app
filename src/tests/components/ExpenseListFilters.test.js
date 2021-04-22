@@ -73,14 +73,14 @@ test('Should dispatch a setDateFilters action filter with changed data', () => {
     let filters = {
         text: undefined,
         sortBy: 'createdAt',
-        startDate: new Date('2021-01-01'),
+        startDate: new Date('2021-01-01').getTime(),
         endDate: undefined
     }
 
     const instance = renderer.root;
 
     act(() => {
-        instance.findByProps({name: 'startDate'}).props.onChange({ target: { value: new Date('2021-01-01') } });
+        instance.findByProps({name: 'startDate'}).props.onChange({ target: { value: '2021-01-01' } });
     });
 
     let state = store.getState().filters
@@ -90,12 +90,12 @@ test('Should dispatch a setDateFilters action filter with changed data', () => {
     filters = {
         text: undefined,
         sortBy: 'createdAt',
-        startDate: new Date('2021-01-01'),
-        endDate: new Date('2021-12-31')
+        startDate: new Date('2021-01-01').getTime(),
+        endDate: new Date('2021-12-31').getTime()
     }
 
     act(() => {
-        instance.findByProps({name: 'endDate'}).props.onChange({ target: { value: new Date('2021-12-31') } });
+        instance.findByProps({name: 'endDate'}).props.onChange({ target: { value: '2021-12-31' } });
     });
 
     state = store.getState().filters
