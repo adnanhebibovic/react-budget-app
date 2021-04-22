@@ -5,7 +5,6 @@
   "scripts": {
     "start": "node index.js",
     "build": "webpack",
-    "watch": "webpack serve --open",
     "test": "jest"
   },
   "author": "Adnan Hebibovic",
@@ -23,6 +22,7 @@
     "css-loader": "^5.1.1",
     "express": "^4.17.1",
     "jest": "^26.6.3",
+    "mini-css-extract-plugin": "^1.5.0",
     "moment": "^2.29.1",
     "node-sass": "^5.0.0",
     "normalize.css": "^8.0.1",
