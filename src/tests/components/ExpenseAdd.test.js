@@ -6,10 +6,16 @@ import configureStore from '../../store/expense-store'
 import expenses from '../fixtures/expenses';
 import ExpenseAdd from '../../components/ExpenseAdd';
 
+jest.mock('../../actions/expenses', () => ({
+  ...jest.requireActual('../../actions/expenses'),
+  addExpense: jest.fn()
+}))
+
 jest.mock('react-router-dom', () => ({
   useHistory: jest.fn()
 }));
 
+import { addExpense, addExpenseToStore } from '../../actions/expenses'
 import { useHistory } from 'react-router-dom'
 
 let store;
@@ -19,6 +25,12 @@ beforeEach(() => {
   useHistory.mockImplementation(() => ({
     push: jest.fn()
   }))
+
+  addExpense.mockImplementation((expense) => {
+    return function(dispatch) {
+      dispatch(addExpenseToStore(expense))
+    }
+  })
 
   store = configureStore()
 
@@ -58,14 +70,14 @@ test('Should dispatch an add action with valid data', () => {
     instance.findByType('form').props.onSubmit({ preventDefault: () => jest.fn() });
   });
 
-  const expectedState = {
-    id: expect.any(String),
+  const expected = {
+    id: undefined,
     title: expenses[0].title,
     amount: expenses[0].amount,
-    createdAt: expect.any(Number)
+    createdAt: undefined
   }
 
   const state = store.getState().expenses
 
-  expect(state).toEqual([expectedState])
+  expect(state).toEqual([expected])
 })

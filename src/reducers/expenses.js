@@ -7,7 +7,7 @@ export default function(state = expensesDefaultState, action) {
         case 'REMOVE_EXPENSE':
             return state.filter((expense) => expense.id !== action.id)
         case 'EDIT_EXPENSE':
-            return state.map((expense) => expense.id == action.id 
+            return state.map((expense) => expense.id === action.id 
                 ? {...expense, ...action.expense}
                 : expense
             )

@@ -1,10 +1,10 @@
-import {addExpense, editExpense, removeExpense} from '../../actions/expenses'
+import {addExpenseToStore, editExpenseInStore, removeExpenseFromStore} from '../../actions/expenses'
 import uuid from 'uuid'
 
 const id = uuid()
 
 test('Should setup remove expense object', () => {    
-    const action = removeExpense(id)
+    const action = removeExpenseFromStore(id)
     expect(action).toEqual({
         type: 'REMOVE_EXPENSE',
         id: id
@@ -12,7 +12,7 @@ test('Should setup remove expense object', () => {
 })
 
 test('Should setup edit expense object', () => {
-    const action = editExpense(id, { title: 'test', amount: 0 });
+    const action = editExpenseInStore(id, { title: 'test', amount: 0 });
     expect(action).toEqual({
         type: 'EDIT_EXPENSE',
         id: id,
@@ -24,7 +24,7 @@ test('Should setup edit expense object', () => {
 })
 
 test('Should setup add expense object with provided values', () => {
-    const action = addExpense({ title: 'test', amount: 1 })
+    const action = addExpenseToStore({ id: uuid(), title: 'test', amount: 1, createdAt: new Date().getTime() })
     expect(action).toEqual({
         type: 'ADD_EXPENSE',
         expense: {
@@ -36,15 +36,10 @@ test('Should setup add expense object with provided values', () => {
     })
 })
 
-test('Should setup add expense object with default values', () => {
-    const action = addExpense({})
+test('Should setup add expense object with no values', () => {
+    const action = addExpenseToStore({})
     expect(action).toEqual({
         type: 'ADD_EXPENSE',
-        expense: {
-            id: expect.any(String),
-            title: '',
-            amount: 0,
-            createdAt: expect.any(Number)
-        }
+        expense: {}
     })
 })

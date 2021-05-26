@@ -4,8 +4,13 @@ import { create, act } from 'react-test-renderer';
 import configureStore from '../../store/expense-store'
 
 import ExpenseEdit from '../../components/ExpenseEdit';
-
 import expenses from '../fixtures/expenses';
+
+jest.mock('../../actions/expenses', () => ({
+    ...jest.requireActual('../../actions/expenses'),
+    editExpense: jest.fn(),
+    removeExpense: jest.fn()
+}))
 
 jest.mock('react-router-dom', () => ({
     useHistory: jest.fn(),
@@ -13,6 +18,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 import { useParams, useHistory } from 'react-router-dom'
+import { editExpense, editExpenseInStore, removeExpense, removeExpenseFromStore } from '../../actions/expenses'
 
 let store;
 let renderer;
@@ -21,6 +27,18 @@ beforeEach(() => {
     useHistory.mockImplementation(() => ({
         push: jest.fn()
     }))
+
+    editExpense.mockImplementation((id, expense) => {
+        return function(dispatch) {
+          dispatch(editExpenseInStore(id, expense))
+        }
+    })
+
+    removeExpense.mockImplementation((id) => {
+        return function(dispatch) {
+            dispatch(removeExpenseFromStore(id))
+          }
+    })
 
     useParams.mockImplementation(() => ({
         id: expenses[0].id
