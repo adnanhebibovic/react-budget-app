@@ -1,30 +1,38 @@
 import db from '../db/firebase'
+import {v4 as uuid} from 'uuid'
 
 export const addExpenseToStore = function(expense = {}) {
+    const defaults = {
+        id: new uuid(),
+        title: '',
+        amount: 0,
+        createdAt: new Date().getTime(),
+        ...expense
+    };
+
     return {
         type: 'ADD_EXPENSE',
         expense: {
-            id: expense.id,
-            title: expense.title,
-            amount: expense.amount,
-            createdAt: expense.createdAt
+            id: defaults.id,
+            title: defaults.title,
+            amount: defaults.amount,
+            createdAt: defaults.createdAt
         }
-    }
+    };
 }
 
-export const addExpense = function({title = '', amount = 0} = {}) {
-    return function(dispatch) {
-        const expense = {
-            title: title,
-            amount: amount,
-            createdAt: new Date().getTime()
-        }
+export const addExpense = function(expense = {}) {
+    const defaults = {
+        createdAt: new Date().getTime(),
+        ...expense
+    }
 
-        db.collection('expenses').add(expense)
+    return function(dispatch) {
+        return db.collection('expenses').add(defaults)
         .then((doc) => {
             dispatch(addExpenseToStore({
                 id: doc.id,
-                ...expense
+                ...defaults
             }))
         })
     }
@@ -37,9 +45,9 @@ export const removeExpenseFromStore = function(id) {
     }
 }
 
-export const removeExpense = function(id = '') {
+export const removeExpense = function(id) {
     return function(dispatch) {
-        db.collection('expenses').doc(id).delete()
+        return db.collection('expenses').doc(id).delete()
         .then(() => {
             dispatch(removeExpenseFromStore(id))
         })
@@ -47,16 +55,22 @@ export const removeExpense = function(id = '') {
 }
 
 export const editExpenseInStore = function(id, expense) {
+    const defaults = {
+        title: '',
+        amount: 0,
+        ...expense
+    };
+
     return {
         type: 'EDIT_EXPENSE',
         id,
-        expense
+        expense: defaults
     }
 }
 
-export const editExpense = function(id = '', expense = {}) {
+export const editExpense = function(id, expense) {
     return function(dispatch) {
-        db.collection('expenses').doc(id).update(expense)
+        return db.collection('expenses').doc(id).update(expense)
         .then(() => {
             dispatch(editExpenseInStore(id, expense))
         })

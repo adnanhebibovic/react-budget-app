@@ -12,7 +12,7 @@ exports[`Should render ExpenseListItem with expenses 1`] = `
     </h3>
   </a>
   <p>
-    400
+    400.0
   </p>
   <time
     dateTime={"2015-03-24T23:00:00.000Z"}

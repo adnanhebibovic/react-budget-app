@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import ExpenseListItem from './ExpenseListItem'
-import selectExpenses from '../selectors/expenses'
+import select from '../selectors/expenses'
 
 export function ExpenseList(props) {
     return (
@@ -18,7 +18,7 @@ export function ExpenseList(props) {
 
 const mapStateToProps = (state) => {
     return {
-        expenses: selectExpenses(state.expenses, state.filters)
+        expenses: select(state.expenses, state.filters)
     }
 }
 

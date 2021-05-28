@@ -1,6 +1,7 @@
 import React from 'react'
 import Moment from 'react-moment';
 import { NavLink } from 'react-router-dom'
+import numeral from 'numeral'
 
 function ExpenseListItem({id, title, amount, createdAt}) {
     return (
@@ -8,7 +9,7 @@ function ExpenseListItem({id, title, amount, createdAt}) {
             <NavLink to={`/expenses/${id}`}>
                 <h3>{title}</h3>
             </NavLink>
-            <p>{amount}</p>
+            <p>{numeral(amount).format('0.0[,]00')}</p>
             <Moment>{createdAt}</Moment>
         </div>
     )

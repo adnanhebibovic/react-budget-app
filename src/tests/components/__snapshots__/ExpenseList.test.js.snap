@@ -16,7 +16,7 @@ exports[`Should render ExpenseList with expenses 1`] = `
       </h3>
     </a>
     <p>
-      400
+      400.0
     </p>
     <time
       dateTime={"2015-03-24T23:00:00.000Z"}
@@ -35,7 +35,7 @@ exports[`Should render ExpenseList with expenses 1`] = `
       </h3>
     </a>
     <p>
-      500
+      500.0
     </p>
     <time
       dateTime={"2015-03-27T23:00:00.000Z"}
@@ -54,7 +54,7 @@ exports[`Should render ExpenseList with expenses 1`] = `
       </h3>
     </a>
     <p>
-      200
+      200.0
     </p>
     <time
       dateTime={"2015-03-26T23:00:00.000Z"}
@@ -73,7 +73,7 @@ exports[`Should render ExpenseList with expenses 1`] = `
       </h3>
     </a>
     <p>
-      100
+      100.0
     </p>
     <time
       dateTime={"2015-03-25T23:00:00.000Z"}

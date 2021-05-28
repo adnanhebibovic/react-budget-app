@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { create, act } from 'react-test-renderer';
 import configureStore from '../../store/expense-store'
+import { v4 as uuid } from 'uuid';
 
 import expenses from '../fixtures/expenses';
 import ExpenseAdd from '../../components/ExpenseAdd';
@@ -28,7 +29,11 @@ beforeEach(() => {
 
   addExpense.mockImplementation((expense) => {
     return function(dispatch) {
-      dispatch(addExpenseToStore(expense))
+      dispatch(addExpenseToStore({
+        ...expense, 
+        id: new uuid(), 
+        createdAt: new Date().getTime()
+      }))
     }
   })
 
@@ -53,7 +58,6 @@ test('Should not dispatch an add action with missing data', () => {
   });
 
   const state = store.getState().expenses
-
   expect(state).toEqual([])
 })
 
@@ -68,16 +72,15 @@ test('Should dispatch an add action with valid data', () => {
   });
   act(() => {
     instance.findByType('form').props.onSubmit({ preventDefault: () => jest.fn() });
-  });
+  })
 
   const expected = {
-    id: undefined,
+    id: expect.any(uuid),
     title: expenses[0].title,
     amount: expenses[0].amount,
-    createdAt: undefined
+    createdAt: expect.any(Number)
   }
 
   const state = store.getState().expenses
-
-  expect(state).toEqual([expected])
+  expect(state).toEqual([expected]) 
 })
