@@ -1,11 +1,5 @@
 import {addExpenseToStore, editExpenseInStore, removeExpenseFromStore, addExpense} from '../../actions/expenses'
 import {v4 as uuid} from 'uuid'
-import configureStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
-
-import expenses from '../fixtures/expenses';
-
-const mockStore = configureStore([thunk]);
 
 const id = uuid()
 

@@ -1,4 +1,4 @@
-import db from '../db/firebase'
+import firestore from '../services/firebase'
 import {v4 as uuid} from 'uuid'
 
 export const addExpenseToStore = function(expense = {}) {
@@ -21,14 +21,21 @@ export const addExpenseToStore = function(expense = {}) {
     };
 }
 
-export const addExpense = function(expense = {}) {
+export const setExpensesInStore = function(expenses = []) {
+    return {
+        type: 'SET_EXPENSE',
+        expenses
+    }
+}
+
+export const startAddExpense = function(expense = {}) {
     const defaults = {
         createdAt: new Date().getTime(),
         ...expense
     }
 
     return function(dispatch) {
-        return db.collection('expenses').add(defaults)
+        return firestore.collection('expenses').add(defaults)
         .then((doc) => {
             dispatch(addExpenseToStore({
                 id: doc.id,
@@ -45,9 +52,9 @@ export const removeExpenseFromStore = function(id) {
     }
 }
 
-export const removeExpense = function(id) {
+export const startRemoveExpense = function(id) {
     return function(dispatch) {
-        return db.collection('expenses').doc(id).delete()
+        return firestore.collection('expenses').doc(id).delete()
         .then(() => {
             dispatch(removeExpenseFromStore(id))
         })
@@ -68,11 +75,29 @@ export const editExpenseInStore = function(id, expense) {
     }
 }
 
-export const editExpense = function(id, expense) {
+export const startEditExpense = function(id, expense) {
     return function(dispatch) {
-        return db.collection('expenses').doc(id).update(expense)
+        return firestore.collection('expenses').doc(id).update(expense)
         .then(() => {
             dispatch(editExpenseInStore(id, expense))
+        })
+    }
+}
+
+export const startSetExpense = function() {
+    return function(dispatch) {
+        return firestore.collection('expenses').get()
+        .then((snapshot) => {
+            const expenses = []
+            snapshot.forEach((document) => {
+                expenses.push({
+                    id: document.id, 
+                    ...document.data()
+                })
+            })
+            return expenses;
+        }).then((result) => {
+            dispatch(setExpensesInStore(result))
         })
     }
 }

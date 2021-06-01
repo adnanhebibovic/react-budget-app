@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { addExpense } from '../actions/expenses'
+import { startAddExpense } from '../actions/expenses'
 
 import ExpenseForm from './ExpenseForm'
 
@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addExpense: (expense) => dispatch(addExpense(expense))
+        addExpense: (expense) => dispatch(startAddExpense(expense))
     }
 }
 

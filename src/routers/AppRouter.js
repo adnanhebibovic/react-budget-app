@@ -1,27 +1,30 @@
 import React from 'react'
 import {
-    BrowserRouter,
+    Router,
     Route, 
     Switch } from 'react-router-dom'
 
+import LoginPage from '../components/LoginPage'
 import ExpenseDashboard from '../components/ExpenseDashboard'
 import ExpensePage from '../components/ExpensePage';
-import HelpPage  from '../components/HelpPage';
 import NotFound  from '../components/NotFound'
 import Header from '../components/Header'
+import { createBrowserHistory } from 'history'
+
+export const history = createBrowserHistory()
 
 export default function App() {
     return (
-        <BrowserRouter>
+        <Router history={history}>
             <div>
                 <Header></Header>
                 <Switch>
-                    <Route exact path="/" component={ExpenseDashboard}></Route>
+                    <Route exact path="/" component={LoginPage}></Route>
+                    <Route path="/dashboard" component={ExpenseDashboard}></Route>
                     <Route path="/expenses" component={ExpensePage}></Route>
-                    <Route path="/help" component={HelpPage}></Route>
                     <Route component={NotFound}></Route>
                 </Switch>
             </div>
-        </BrowserRouter>
-    );
+        </Router>
+    )
 }

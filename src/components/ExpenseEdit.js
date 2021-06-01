@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
-import { editExpense, removeExpense } from '../actions/expenses'
+import { startEditExpense, startRemoveExpense } from '../actions/expenses'
 
 import ExpenseForm from './ExpenseForm'
 
@@ -36,8 +36,8 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        editExpense: (id, expense) => dispatch(editExpense(id, expense)),
-        removeExpense: (id) => dispatch(removeExpense(id))
+        editExpense: (id, expense) => dispatch(startEditExpense(id, expense)),
+        removeExpense: (id) => dispatch(startRemoveExpense(id))
     }
 }
 

@@ -1,29 +1,44 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import AppRouter from './routers/AppRouter'
+import AppRouter, { history } from './routers/AppRouter'
 import configureStore from './store/expense-store'
 
 import 'normalize.css/normalize.css'
 import './styles/styles.scss'
 
-import db from './db/firebase'
+import { firebase } from './services/firebase'
+import { startSetExpense } from './actions/expenses'
+import { login, logout } from './actions/auth'
 
-const query = db.collection('expenses').get();
-query.then((snapshot) => {
-    var expenses = [];
-    snapshot.forEach((document) => {
-        expenses.push({
-            id: document.id, 
-            ...document.data()
+const store = configureStore();
+ReactDOM.render(<p>Loading...</p>, document.getElementById('root'));
+
+let hasRendered = false;
+const renderApp = function() {
+    if (!hasRendered) {
+        ReactDOM.render(<Provider store={store}><AppRouter/></Provider>, document.getElementById('root'));
+        hasRendered = true;
+    }
+}
+
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        store.dispatch(login(user.uid))
+        store.dispatch(startSetExpense()).then(() => {
+            renderApp();
+            if (history.location.pathname === '/') {
+                history.push('/dashboard')
+            }
         })
-    });
-    return expenses;
-}).then((result) => {
-    const store = configureStore(result);    
-
-    ReactDOM.render(<Provider store={store}><AppRouter/></Provider>, document.getElementById('root'));
+    } else {
+        store.dispatch(logout())
+        renderApp();
+        history.push('/')
+    }
 })
+
+
 
 
 

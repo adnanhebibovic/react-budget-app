@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/auth'
 
 firebase.initializeApp({
     apiKey: process.env.FIREBASE_API_KEY,
@@ -11,4 +12,9 @@ firebase.initializeApp({
     measurementId: process.env.FIREBASE_MEASUREMENT_ID
 });
 
-export default firebase.firestore();
+firebase.auth().useDeviceLanguage();
+
+const firestore = firebase.firestore();
+const provider = new firebase.auth.GoogleAuthProvider();
+
+export { provider, firebase, firestore as default }

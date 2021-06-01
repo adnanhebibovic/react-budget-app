@@ -25,7 +25,7 @@ module.exports = {
         publicPath: "/",
         clean: true,
   },
-  mode: 'production',
+  mode: 'development',
   module: {
     rules: [{
       test: /\.m?js$/,

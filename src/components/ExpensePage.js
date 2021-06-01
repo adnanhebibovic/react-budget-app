@@ -4,11 +4,20 @@ import {
     Route,
     useRouteMatch
   } from "react-router-dom";
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router';
 
 import ExpenseAdd from './ExpenseAdd'
 import ExpenseEdit from './ExpenseEdit'
 
-function ExpensePage() {
+function ExpensePage(props) {
+
+    if (!props.isAuthenticated) {
+        return (
+            <Redirect to="/"></Redirect>
+        )
+    }
+
     let { path } = useRouteMatch()
     return (
         <div>
@@ -24,4 +33,10 @@ function ExpensePage() {
     );
 }
 
-export default ExpensePage;
+const mapStateToProps = (state) => {
+    return {
+        isAuthenticated: !!state.auth.uid
+    }
+}
+
+export default connect(mapStateToProps)(ExpensePage)

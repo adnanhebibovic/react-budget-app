@@ -3,20 +3,22 @@ import thunk from 'redux-thunk';
 
 import expensesReducer, {expensesDefaultState} from '../reducers/expenses'
 import filtersReducer, {filtersDefaultState} from '../reducers/filters'
+import authReducer from '../reducers/auth'
 
 export default function(preloadedExpensesState = expensesDefaultState, preloadedFiltersState = filtersDefaultState) {
     const store = createStore(
         combineReducers({
             expenses: expensesReducer,
-            filters: filtersReducer
+            filters: filtersReducer,
+            auth: authReducer
         }),
         {
             expenses: preloadedExpensesState,
-            filters: preloadedFiltersState
+            filters: preloadedFiltersState,
+            auth: {}
         },
         applyMiddleware(thunk)
     )
 
     return store;
 }
-
