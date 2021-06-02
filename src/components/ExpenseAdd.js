@@ -9,7 +9,7 @@ function ExpenseAdd(props) {
     let history = useHistory()
 
     function onSubmit(expense) {
-        props.addExpense(expense);
+        props.addExpense(props.uid, expense);
         history.push('/');
     } 
 
@@ -23,13 +23,14 @@ function ExpenseAdd(props) {
 
 const mapStateToProps = (state) => {
     return {
-        expenses: state.expenses
+        expenses: state.expenses,
+        uid: state.auth.uid
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addExpense: (expense) => dispatch(startAddExpense(expense))
+        addExpense: (uid, expense) => dispatch(startAddExpense(uid, expense))
     }
 }
 

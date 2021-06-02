@@ -25,7 +25,7 @@ const renderApp = function() {
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         store.dispatch(login(user.uid))
-        store.dispatch(startSetExpense()).then(() => {
+        store.dispatch(startSetExpense(user.uid)).then(() => {
             renderApp();
             if (history.location.pathname === '/') {
                 history.push('/dashboard')

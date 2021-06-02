@@ -28,36 +28,10 @@ export const setExpensesInStore = function(expenses = []) {
     }
 }
 
-export const startAddExpense = function(expense = {}) {
-    const defaults = {
-        createdAt: new Date().getTime(),
-        ...expense
-    }
-
-    return function(dispatch) {
-        return firestore.collection('expenses').add(defaults)
-        .then((doc) => {
-            dispatch(addExpenseToStore({
-                id: doc.id,
-                ...defaults
-            }))
-        })
-    }
-}
-
 export const removeExpenseFromStore = function(id) {
     return {
         type: 'REMOVE_EXPENSE',
         id
-    }
-}
-
-export const startRemoveExpense = function(id) {
-    return function(dispatch) {
-        return firestore.collection('expenses').doc(id).delete()
-        .then(() => {
-            dispatch(removeExpenseFromStore(id))
-        })
     }
 }
 
@@ -75,18 +49,48 @@ export const editExpenseInStore = function(id, expense) {
     }
 }
 
-export const startEditExpense = function(id, expense) {
+export const startAddExpense = function(uid, expense = {}) {
+    const defaults = {
+        createdAt: new Date().getTime(),
+        ...expense
+    }
+
     return function(dispatch) {
-        return firestore.collection('expenses').doc(id).update(expense)
+        const user = firestore.collection('users').doc(uid)
+        return user.collection('expenses').add(defaults)
+        .then((doc) => {
+            dispatch(addExpenseToStore({
+                id: doc.id,
+                ...defaults
+            }))
+        })
+    }
+}
+
+export const startRemoveExpense = function(uid, id) {
+    return function(dispatch) {
+        const user = firestore.collection('users').doc(uid)
+        return user.collection('expenses').doc(id).delete()
+        .then(() => {
+            dispatch(removeExpenseFromStore(id))
+        })
+    }
+}
+
+export const startEditExpense = function(uid, id, expense) {
+    return function(dispatch) {
+        const user = firestore.collection('users').doc(uid)
+        return user.collection('expenses').doc(id).update(expense)
         .then(() => {
             dispatch(editExpenseInStore(id, expense))
         })
     }
 }
 
-export const startSetExpense = function() {
+export const startSetExpense = function(uid) {
     return function(dispatch) {
-        return firestore.collection('expenses').get()
+        const user = firestore.collection('users').doc(uid)
+        return user.collection('expenses').get()
         .then((snapshot) => {
             const expenses = []
             snapshot.forEach((document) => {

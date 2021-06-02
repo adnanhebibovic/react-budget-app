@@ -10,12 +10,12 @@ function ExpenseEdit(props) {
     let history = useHistory()
 
     function onSubmit(expense) {
-        props.editExpense(id, expense)
+        props.editExpense(props.uid, id, expense)
         history.push('/')
     }
 
     function onRemove() {
-        props.removeExpense(id)
+        props.removeExpense(props.uid, id)
         history.push('/')
     }
 
@@ -28,16 +28,17 @@ function ExpenseEdit(props) {
     )
 }
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
     return {
-        expenses: state.expenses
+        expenses: state.expenses,
+        uid: state.auth.uid
     }
 }
 
-const mapDispatchToProps = (dispatch, props) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        editExpense: (id, expense) => dispatch(startEditExpense(id, expense)),
-        removeExpense: (id) => dispatch(startRemoveExpense(id))
+        editExpense: (uid, id, expense) => dispatch(startEditExpense(uid, id, expense)),
+        removeExpense: (uid, id) => dispatch(startRemoveExpense(uid, id))
     }
 }
 

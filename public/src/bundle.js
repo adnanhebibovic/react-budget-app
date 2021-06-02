@@ -24097,10 +24097,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "addExpenseToStore": () => (/* binding */ addExpenseToStore),
 /* harmony export */   "setExpensesInStore": () => (/* binding */ setExpensesInStore),
-/* harmony export */   "startAddExpense": () => (/* binding */ startAddExpense),
 /* harmony export */   "removeExpenseFromStore": () => (/* binding */ removeExpenseFromStore),
-/* harmony export */   "startRemoveExpense": () => (/* binding */ startRemoveExpense),
 /* harmony export */   "editExpenseInStore": () => (/* binding */ editExpenseInStore),
+/* harmony export */   "startAddExpense": () => (/* binding */ startAddExpense),
+/* harmony export */   "startRemoveExpense": () => (/* binding */ startRemoveExpense),
 /* harmony export */   "startEditExpense": () => (/* binding */ startEditExpense),
 /* harmony export */   "startSetExpense": () => (/* binding */ startSetExpense)
 /* harmony export */ });
@@ -24142,32 +24142,10 @@ var setExpensesInStore = function setExpensesInStore() {
     expenses: expenses
   };
 };
-var startAddExpense = function startAddExpense() {
-  var expense = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-  var defaults = _objectSpread({
-    createdAt: new Date().getTime()
-  }, expense);
-
-  return function (dispatch) {
-    return _services_firebase__WEBPACK_IMPORTED_MODULE_0__.default.collection('expenses').add(defaults).then(function (doc) {
-      dispatch(addExpenseToStore(_objectSpread({
-        id: doc.id
-      }, defaults)));
-    });
-  };
-};
 var removeExpenseFromStore = function removeExpenseFromStore(id) {
   return {
     type: 'REMOVE_EXPENSE',
     id: id
-  };
-};
-var startRemoveExpense = function startRemoveExpense(id) {
-  return function (dispatch) {
-    return _services_firebase__WEBPACK_IMPORTED_MODULE_0__.default.collection('expenses').doc(id)["delete"]().then(function () {
-      dispatch(removeExpenseFromStore(id));
-    });
   };
 };
 var editExpenseInStore = function editExpenseInStore(id, expense) {
@@ -24182,16 +24160,42 @@ var editExpenseInStore = function editExpenseInStore(id, expense) {
     expense: defaults
   };
 };
-var startEditExpense = function startEditExpense(id, expense) {
+var startAddExpense = function startAddExpense(uid) {
+  var expense = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  var defaults = _objectSpread({
+    createdAt: new Date().getTime()
+  }, expense);
+
   return function (dispatch) {
-    return _services_firebase__WEBPACK_IMPORTED_MODULE_0__.default.collection('expenses').doc(id).update(expense).then(function () {
+    var user = _services_firebase__WEBPACK_IMPORTED_MODULE_0__.default.collection('users').doc(uid);
+    return user.collection('expenses').add(defaults).then(function (doc) {
+      dispatch(addExpenseToStore(_objectSpread({
+        id: doc.id
+      }, defaults)));
+    });
+  };
+};
+var startRemoveExpense = function startRemoveExpense(uid, id) {
+  return function (dispatch) {
+    var user = _services_firebase__WEBPACK_IMPORTED_MODULE_0__.default.collection('users').doc(uid);
+    return user.collection('expenses').doc(id)["delete"]().then(function () {
+      dispatch(removeExpenseFromStore(id));
+    });
+  };
+};
+var startEditExpense = function startEditExpense(uid, id, expense) {
+  return function (dispatch) {
+    var user = _services_firebase__WEBPACK_IMPORTED_MODULE_0__.default.collection('users').doc(uid);
+    return user.collection('expenses').doc(id).update(expense).then(function () {
       dispatch(editExpenseInStore(id, expense));
     });
   };
 };
-var startSetExpense = function startSetExpense() {
+var startSetExpense = function startSetExpense(uid) {
   return function (dispatch) {
-    return _services_firebase__WEBPACK_IMPORTED_MODULE_0__.default.collection('expenses').get().then(function (snapshot) {
+    var user = _services_firebase__WEBPACK_IMPORTED_MODULE_0__.default.collection('users').doc(uid);
+    return user.collection('expenses').get().then(function (snapshot) {
       var expenses = [];
       snapshot.forEach(function (document) {
         expenses.push(_objectSpread({
@@ -24280,7 +24284,7 @@ function ExpenseAdd(props) {
   var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useHistory)();
 
   function onSubmit(expense) {
-    props.addExpense(expense);
+    props.addExpense(props.uid, expense);
     history.push('/');
   }
 
@@ -24291,14 +24295,15 @@ function ExpenseAdd(props) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    expenses: state.expenses
+    expenses: state.expenses,
+    uid: state.auth.uid
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    addExpense: function addExpense(expense) {
-      return dispatch((0,_actions_expenses__WEBPACK_IMPORTED_MODULE_2__.startAddExpense)(expense));
+    addExpense: function addExpense(uid, expense) {
+      return dispatch((0,_actions_expenses__WEBPACK_IMPORTED_MODULE_2__.startAddExpense)(uid, expense));
     }
   };
 };
@@ -24380,12 +24385,12 @@ function ExpenseEdit(props) {
   var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useHistory)();
 
   function onSubmit(expense) {
-    props.editExpense(id, expense);
+    props.editExpense(props.uid, id, expense);
     history.push('/');
   }
 
   function onRemove() {
-    props.removeExpense(id);
+    props.removeExpense(props.uid, id);
     history.push('/');
   }
 
@@ -24399,19 +24404,20 @@ function ExpenseEdit(props) {
   }, "Remove"));
 }
 
-var mapStateToProps = function mapStateToProps(state, props) {
+var mapStateToProps = function mapStateToProps(state) {
   return {
-    expenses: state.expenses
+    expenses: state.expenses,
+    uid: state.auth.uid
   };
 };
 
-var mapDispatchToProps = function mapDispatchToProps(dispatch, props) {
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    editExpense: function editExpense(id, expense) {
-      return dispatch((0,_actions_expenses__WEBPACK_IMPORTED_MODULE_2__.startEditExpense)(id, expense));
+    editExpense: function editExpense(uid, id, expense) {
+      return dispatch((0,_actions_expenses__WEBPACK_IMPORTED_MODULE_2__.startEditExpense)(uid, id, expense));
     },
-    removeExpense: function removeExpense(id) {
-      return dispatch((0,_actions_expenses__WEBPACK_IMPORTED_MODULE_2__.startRemoveExpense)(id));
+    removeExpense: function removeExpense(uid, id) {
+      return dispatch((0,_actions_expenses__WEBPACK_IMPORTED_MODULE_2__.startRemoveExpense)(uid, id));
     }
   };
 };
@@ -85895,7 +85901,7 @@ var renderApp = function renderApp() {
 _services_firebase__WEBPACK_IMPORTED_MODULE_7__.firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     store.dispatch((0,_actions_auth__WEBPACK_IMPORTED_MODULE_9__.login)(user.uid));
-    store.dispatch((0,_actions_expenses__WEBPACK_IMPORTED_MODULE_8__.startSetExpense)()).then(function () {
+    store.dispatch((0,_actions_expenses__WEBPACK_IMPORTED_MODULE_8__.startSetExpense)(user.uid)).then(function () {
       renderApp();
 
       if (_routers_AppRouter__WEBPACK_IMPORTED_MODULE_3__.history.location.pathname === '/') {
