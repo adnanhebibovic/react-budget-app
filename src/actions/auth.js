@@ -15,7 +15,7 @@ export const startLogin = function() {
 
 export const logout = function() {
     return {
-        type: 'LOGIN'
+        type: 'LOGOUT'
     }
 }
 
