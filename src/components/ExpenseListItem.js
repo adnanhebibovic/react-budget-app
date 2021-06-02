@@ -9,7 +9,7 @@ function ExpenseListItem({id, title, amount, createdAt}) {
             <NavLink to={`/expenses/${id}`}>
                 <h3>{title}</h3>
             </NavLink>
-            <p>{numeral(amount).format('0.0[,]00')}</p>
+            <p>{numeral(amount).format('$0,0[.]00')}</p>
             <Moment>{createdAt}</Moment>
         </div>
     )
