@@ -1,4 +1,4 @@
-import {addExpenseToStore, editExpenseInStore, removeExpenseFromStore, addExpense} from '../../actions/expenses'
+import {addExpenseToStore, editExpenseInStore, removeExpenseFromStore} from '../../actions/expenses'
 import {v4 as uuid} from 'uuid'
 
 const id = uuid()

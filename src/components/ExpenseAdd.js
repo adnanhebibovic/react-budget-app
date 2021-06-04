@@ -13,9 +13,21 @@ function ExpenseAdd(props) {
         history.push('/');
     } 
 
+    function onCancelClick() {
+        history.goBack();
+    }
+
     return (
         <div>
-           <h1>Create Expense</h1>
+            <div className="page-header">
+                <div className="content-container">
+                    <h1 className="page-header__title">Create an expense</h1>
+                    <div className="page-header__actions">
+                        <button form="expenseForm" className="button" type="submit">Save</button>
+                        <button className="button" onClick={onCancelClick}>Cancel</button>
+                    </div>
+                </div>            
+            </div>
             <ExpenseForm onSubmit={onSubmit}></ExpenseForm>
         </div>
     )

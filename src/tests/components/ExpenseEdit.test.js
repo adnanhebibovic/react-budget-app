@@ -28,13 +28,13 @@ beforeEach(() => {
         push: jest.fn()
     }))
 
-    editExpense.mockImplementation((id, expense) => {
+    editExpense.mockImplementation((uid, id, expense) => {
         return function(dispatch) {
           dispatch(editExpenseInStore(id, expense))
         }
     })
 
-    removeExpense.mockImplementation((id) => {
+    removeExpense.mockImplementation((uid, id) => {
         return function(dispatch) {
             dispatch(removeExpenseFromStore(id))
           }

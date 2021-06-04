@@ -25,7 +25,7 @@ module.exports = {
         publicPath: "/",
         clean: true,
   },
-  mode: 'production',
+  mode: 'development',
   module: {
     rules: [{
       test: /\.m?js$/,
@@ -52,6 +52,9 @@ module.exports = {
       }, {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      }, {
+        test: /\.(png|jpg)$/,
+        loader: 'url-loader'
       }]
   },
   devtool: 'source-map',

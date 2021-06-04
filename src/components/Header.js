@@ -10,17 +10,15 @@ function Header(props) {
     }
 
     return (
-        <header>
-            <h1>Budget app</h1>
-            <ul>
-                <li>
-                    <NavLink to="/dashboard">Dashboard</NavLink>
-                </li>
-                <li>
-                    <NavLink to="/expenses">Create</NavLink>
-                </li>
-            </ul>
-            <button onClick={props.startLogout}>Logout</button>
+        <header className="header">
+            <div className="content-container">
+                <div className="header__content">
+                    <NavLink className="header__title" to="/dashboard">
+                        <h1>Budget</h1>
+                    </NavLink>
+                    <button className="button button--link" onClick={props.startLogout}>Logout</button>
+                </div>
+            </div>
         </header>
     )
 }

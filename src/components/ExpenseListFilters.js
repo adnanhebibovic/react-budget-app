@@ -32,20 +32,26 @@ function ExpenseListFilters(props) {
         props.setDateFilters(startDate, endDate)
     }
 
-    const [startDate, setStartDate] = useState(undefined)
-    const [endDate, setEndDate] = useState(undefined)
+    const [startDate, setStartDate] = useState(new Date("1/1/" + new Date().getFullYear()))
+    const [endDate, setEndDate] = useState(new Date("12/31/" + new Date().getFullYear()))
 
     return (
-        <div>
-            <input type="text" defaultValue={ props.filters.text } onChange={onTextChange}></input>
-            
-            <select defaultValue={ props.filters.sortBy } onChange={onSelectChange}>
-                <option value="createdAt">Date</option>
-                <option value="amount">Amount</option>
-            </select>
-
-            <input type="date" name="startDate" onChange={onStartDateChange}></input>
-            <input type="date" name="endDate" onChange={onEndDateChange}></input>
+        <div className="content-container">
+            <div className="input-group">
+                <div className="input-group__item">
+                    <input className="input" type="text" defaultValue={props.filters.text} onChange={onTextChange} placeholder="Search expenses"></input>
+                </div>
+                <div className="input-group__item">
+                    <select className="select" defaultValue={props.filters.sortBy} onChange={onSelectChange}>
+                    <option value="createdAt">Date</option>
+                    <option value="amount">Amount</option>
+                    </select>
+                </div>
+                <div className="input-group__item">
+                    <input className="input" type="date" name="startDate" onChange={onStartDateChange}></input>
+                    <input className="input" type="date" name="endDate" onChange={onEndDateChange}></input>
+                </div>
+            </div>
         </div>
     )
 }

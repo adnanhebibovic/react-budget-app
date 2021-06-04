@@ -27,7 +27,7 @@ beforeEach(() => {
     push: jest.fn()
   }))
 
-  addExpense.mockImplementation((expense) => {
+  addExpense.mockImplementation((uid, expense) => {
     return function(dispatch) {
       dispatch(addExpenseToStore({
         ...expense, 

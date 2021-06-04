@@ -19,11 +19,24 @@ function ExpenseEdit(props) {
         history.push('/')
     }
 
+    function onCancelClick() {
+        history.goBack();
+    }
+
     return (
         <div>
-            <h1>Edit Expense</h1>
+            
+            <div className="page-header">
+                <div className="content-container">
+                    <h1 className="page-header__title">Edit an expense</h1>
+                    <div className="page-header__actions">
+                        <button form="expenseForm" className="button" type="submit">Save</button>
+                        <button className="button" onClick={onCancelClick}>Cancel</button>
+                        <button className="button" onClick={onRemove}>Remove</button>
+                    </div>
+                </div>            
+            </div>
             <ExpenseForm expense={props.expenses.find((e) => e.id === id)} onSubmit={onSubmit}/>
-            <button onClick={onRemove}>Remove</button>
         </div>
     )
 }

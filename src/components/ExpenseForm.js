@@ -29,10 +29,11 @@ export default function(props) {
     }
 
     return (
-        <div>
+        <div className="content-container">
             {error && <p>{error}</p>}
-            <form onSubmit={onFormSubmit}>
-                <input 
+            <form id="expenseForm" onSubmit={onFormSubmit}>
+                <input
+                    className="input" 
                     type="text" 
                     placeholder="Title" 
                     autoFocus
@@ -40,12 +41,11 @@ export default function(props) {
                     onChange={onTextChange}></input>
                     
                 <input 
+                    className="input"
                     type="number" 
                     placeholder="Amount"
                     value={amount}
                     onChange={onAmountChange}></input>
-
-                <input type="submit" value="Save"></input>
             </form>
         </div>
     )    

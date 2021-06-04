@@ -5,13 +5,13 @@ import numeral from 'numeral'
 
 function ExpenseListItem({id, title, amount, createdAt}) {
     return (
-        <div>
-            <NavLink to={`/expenses/${id}`}>
-                <h3>{title}</h3>
-            </NavLink>
-            <p>{numeral(amount).format('$0,0[.]00')}</p>
-            <Moment>{createdAt}</Moment>
-        </div>
+        <NavLink className="list-item" to={`/expenses/${id}`}>
+            <div>
+                <h3 className="list-item__title">{title}</h3>
+                <span className="list-item__date"><Moment format="MMMM, Do YYYY">{createdAt}</Moment></span>
+            </div>
+            <h3 className="list-item__amount">{numeral(amount).format('$0,0[.]00')}</h3>
+        </NavLink>
     )
 }
 

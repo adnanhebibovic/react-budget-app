@@ -15,9 +15,8 @@ export function ExpenseDashboard(props) {
     
     return (
         <div>
-            <h1>Expense dashboard</h1>
-            <ExpenseListFilters></ExpenseListFilters>
             <ExpenseSummary></ExpenseSummary>
+            <ExpenseListFilters></ExpenseListFilters>
             <ExpenseList></ExpenseList>
         </div>
     );
